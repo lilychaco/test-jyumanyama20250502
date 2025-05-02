@@ -1,0 +1,77 @@
+<?php get_header(); ?>
+
+<!--ヘッダー-->
+<section class="caption">
+	<div class="caption__content">
+		<div class="caption__title">休診日カレンダー</div>
+	</div>
+</section>
+<!--ヘッダー-->
+<!-- breadcrumb -->
+<?php echo get_template_part('include/breadcrumb'); ?>
+<!-- /breadcrumb -->
+<!-- content -->
+<div id="content" class="inner">
+	<div class="content-inner">
+		<!-- primary -->
+		<main id="primary">
+			<!-- entry -->
+			<?php
+					if ( have_posts() ) :
+					while ( have_posts() ) : the_post();
+					?>
+			<article <?php post_class( array('entry')); ?>>
+
+				<!-- entry-header -->
+				<div class="entry-header">
+					<h1 class="entry-title"><?php the_title(); ?></h1><!-- /entry-title -->
+					<!-- entry-meta -->
+					<div class="entry-meta">
+						<time class="entry-published" datetime="<?php the_time('c'); ?>">公開日 <?php the_time('Y/n/j'); ?></time>
+						<?php if(get_the_modified_time( 'Y-m-d' ) !== get_the_time('Y-m-d')) :?>
+						<time class="entry-updated" datetime="<?php the_modified_time('c'); ?>">最終更新日
+							<?php the_modified_time('Y/n/j');?></time>
+						<?php endif; ?>
+					</div><!-- /entry-meta -->
+
+					<!-- entry-img -->
+					<div class="entry-img">
+						<?php
+									if (has_post_thumbnail() ) {
+									// アイキャッチ画像が設定されてればミディアムサイズで表示
+									the_post_thumbnail('medium');
+									} else {
+									// なければnoimage画像をデフォルトで表示
+									echo '<img src="' . esc_url(get_template_directory_uri()) . '/assets/images/noimg.png" alt="">';
+									}
+									?>
+					</div><!-- /entry-img -->
+
+				</div><!-- /entry-header -->
+
+				<!-- entry-body -->
+				<div class="entry-body">
+					<?php the_content(); ?>
+
+					<?php
+							//改ページを有効にするための記述
+							wp_link_pages(
+							array(
+							'before' => '<nav class="entry-links">',
+							'after' => '</nav>',
+							'link_before' => '',
+							'link_after' => '',
+							'next_or_number' => 'number',
+							'separator' => '',
+							)
+							);
+							?>
+				</div><!-- /entry-body -->
+			</article> <!-- /entry -->
+			<?php endwhile; endif; ?>
+		</main><!-- /primary -->
+
+	</div><!-- /inner -->
+</div><!-- /content -->
+
+<?php get_footer(); ?>
