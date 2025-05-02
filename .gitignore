@@ -1,0 +1,15 @@
+# WordPress本体のファイルを除外
+app/public/wp-admin/
+app/public/wp-includes/
+
+# minified（圧縮済み）JavaScriptを除外
+*.min.js
+
+# OSやエディタの一時ファイル
+.DS_Store
+Thumbs.db
+*.log
+
+# Nodeやcomposerのパッケージ（使っていれば）
+node_modules/
+vendor/
